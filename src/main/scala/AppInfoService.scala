@@ -8,10 +8,13 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 }
 
 trait AppInfoService extends JsonSupport{
+
   val appInfoServiceRoute =
     path("status") {
       get {
         complete(AppInfo("1.0.0","READY"))
       }
     }
+
+
 }
