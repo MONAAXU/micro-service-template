@@ -1,10 +1,12 @@
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+
 import scala.io.StdIn
 
-object WebServer {
+
+
+object WebServer extends JsonSupport with AppInfoService{
   def main(args: Array[String]) {
 
     implicit val system = ActorSystem("my-system")
@@ -12,12 +14,7 @@ object WebServer {
 
     implicit val executionContext = system.dispatcher
 
-    val route =
-      path("hello") {
-        get {
-          complete("Say hello to akka-http")
-        }
-      }
+    val route = appInfoServiceRoute
 
     val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
 
