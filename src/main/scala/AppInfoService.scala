@@ -16,5 +16,4 @@ trait AppInfoService extends JsonSupport{
       }
     }
 
-
 }
