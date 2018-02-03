@@ -12,7 +12,7 @@ object WebServer extends JsonSupport with AppInfoService with LazyLogging{
   def main(args: Array[String]) {
 
     val prop = new Properties();
-    prop.load(new FileInputStream(new File(System.getProperty("user.dir")+"/src/main/scala/catalina.properties")));
+    prop.load(new FileInputStream(new File(System.getProperty("user.dir")+"/src/main/resources/catalina.properties")));
 
     implicit val system = ActorSystem("my-system")
     implicit val materializer = ActorMaterializer()
@@ -26,7 +26,7 @@ object WebServer extends JsonSupport with AppInfoService with LazyLogging{
     val bindingFuture = Http().bindAndHandle(route, host, port)
 
     val logger = Logger(LoggerFactory.getLogger("my-logger"))
-    logger.info(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+    logger.info(s"Server online at http://localhost:8080/\nPress Ctrl+C to stop...")
 
   }
 }
