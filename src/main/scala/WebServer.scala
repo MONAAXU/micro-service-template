@@ -14,18 +14,21 @@ object WebServer extends JsonSupport with AppInfoService with LazyLogging{
     val prop = new Properties();
     prop.load(new FileInputStream(new File(System.getProperty("user.dir")+"/src/main/resources/catalina.properties")));
 
-    implicit val system = ActorSystem("my-system")
+    val host = prop.getProperty("host","0.0.0.0");
+    val port = Integer.valueOf(prop.getProperty("port","8080"));
+    val akkaSystemName = prop.getProperty("akka-system-name");
+    val loggerName = prop.getProperty("logger-name")
+
+    implicit val system = ActorSystem(akkaSystemName)
     implicit val materializer = ActorMaterializer()
 
     implicit val executionContext = system.dispatcher
 
     val route = appInfoServiceRoute
-    val host = prop.getProperty("host","0.0.0.0");
-    val port = Integer.valueOf(prop.getProperty("port","8080"));
 
     val bindingFuture = Http().bindAndHandle(route, host, port)
 
-    val logger = Logger(LoggerFactory.getLogger("my-logger"))
+    val logger = Logger(LoggerFactory.getLogger(loggerName))
     logger.info(s"Server online at http://localhost:8080/\nPress Ctrl+C to stop...")
 
   }
