@@ -19,6 +19,8 @@ object WebServer extends JsonSupport with AppInfoService with LazyLogging{
     val akkaSystemName = prop.getProperty("akka-system-name");
     val loggerName = prop.getProperty("logger-name")
 
+    ZookeeperClient.init();
+
     implicit val system = ActorSystem(akkaSystemName)
     implicit val materializer = ActorMaterializer()
 
