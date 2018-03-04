@@ -1,3 +1,9 @@
 .idea
 project
 target
+scripts/*.crt
+scripts/*.jks
+scripts/*.csr
+scripts/*.p12
+scripts/*.key
+scripts/password
